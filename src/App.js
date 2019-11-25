@@ -5,9 +5,12 @@ import Main from "./components/Main";
 import ContainerWrapper from "./components/ContainerWrapper";
 import Footer from "./components/Footer";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { connect } from "react-redux";
+import { SIGN_IN } from "./store/actions/signInAction";
 
 import AboutMe from "./components/AboutMe";
 import Resume from "./components/Resume";
+
 function App() {
   return (
     <Router>

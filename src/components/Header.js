@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import SignIn from "./SignIn";
+import { SignIn } from "./SignIn";
+import { useSelector } from "react-redux";
 const MenuItem = styled(Link)`
   color: #aaa8a8;
   text-align: center;
@@ -29,11 +30,12 @@ const Navigation = styled.div`
 `;
 
 export default function Header() {
+  const login = useSelector(state => state.user);
   return (
     <>
       <Navigation>
         <MenuItem to="/">Главная</MenuItem>
-        <MenuItem to="/about">Обо мне</MenuItem>
+        {login && <MenuItem to="/about">Обо мне</MenuItem>}
         <MenuItem to="/resume">Резюме</MenuItem>
         <SignIn />
       </Navigation>
