@@ -1,12 +1,12 @@
 import React from "react";
 import "./App.css";
 import Header from "./components/Header";
-import Main from "./components/Main";
+import { Main } from "./components/Main";
 import ContainerWrapper from "./components/ContainerWrapper";
 import Footer from "./components/Footer";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
-import { SIGN_IN } from "./store/actions/signInAction";
+// import { SIGN_IN } from "./store/actions/signInAction";
 
 import AboutMe from "./components/AboutMe";
 import Resume from "./components/Resume";

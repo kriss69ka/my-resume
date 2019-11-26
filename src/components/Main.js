@@ -2,6 +2,13 @@
 
 import React from "react";
 import styled from "styled-components";
+import { connect } from "react-redux";
+
+import { fetchUser as fetchUserAction } from "../store/actions/user";
+
+const mapDispatchToProps = {
+  fetchUser: fetchUserAction
+};
 
 const Img = styled.img`
   width: 776px;
@@ -32,7 +39,10 @@ const AboutMe = styled.p`
   font-size: 14px;
 `;
 
-export default function Main() {
+export default function MainComponent({ fetchUser }) {
+  React.useEffect(() => {
+    fetchUser(1);
+  }, []);
   return (
     <>
       <MainContainer>
@@ -50,3 +60,5 @@ export default function Main() {
     </>
   );
 }
+
+export const Main = connect(null, mapDispatchToProps)(MainComponent);

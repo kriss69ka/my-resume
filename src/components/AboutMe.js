@@ -37,9 +37,6 @@ const SocialImg = styled.img`
 `;
 
 export default function AboutMe() {
-  React.useEffect(() => {
-    fetch("http://localhost:3000/123");
-  }, []);
   return (
     <Container>
       <ContainerAboutMe>

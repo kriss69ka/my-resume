@@ -35,7 +35,7 @@ export default function Header() {
     <>
       <Navigation>
         <MenuItem to="/">Главная</MenuItem>
-        {login && <MenuItem to="/about">Обо мне</MenuItem>}
+        <MenuItem to="/about">Обо мне</MenuItem>
         <MenuItem to="/resume">Резюме</MenuItem>
         <SignIn />
       </Navigation>

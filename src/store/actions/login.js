@@ -1,6 +1,5 @@
 // import "firebase/auth";
 import * as firebase from "firebase";
-import { dispatch } from "rxjs/internal/observable/pairs";
 export const SIGN_IN = "SIGN_IN";
 
 const config = {
@@ -20,15 +19,13 @@ const apple = new firebase.auth.OAuthProvider("apple.com");
 const facebook = new firebase.auth.FacebookAuthProvider();
 
 const login = (provider, dispatch) => {
-  console.log(provider);
-  console.log(dispatch);
   firebase
     .auth()
     .signInWithPopup(provider)
     .then(result => {
-      console.log(result);
       var token = result.credential.accessToken;
       var user = result.user;
+      console.log(user.uid);
       dispatch({ type: SIGN_IN, payload: { token, user } });
     })
     .catch(error => {

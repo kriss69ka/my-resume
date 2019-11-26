@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { googleLogin, appleLogin, facebookLogin } from "../store/actions/login";
 import { connect } from "react-redux";
-const isMacLike = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
-const isIOS = /(iPhone|iPod|iPad)/i.test(navigator.platform);
 
 const mapDispatchToProps = {
   googleLogin
@@ -19,11 +17,9 @@ class SignInComponent extends Component {
         <div style={{ margin: "10px" }} onClick={this.loginWithGoogle}>
           googleLogin
         </div>
-        {(isMacLike || isIOS) && (
-          <div style={{ margin: "10px" }} onClick={appleLogin}>
-            appleLogin
-          </div>
-        )}
+        <div style={{ margin: "10px" }} onClick={appleLogin}>
+          appleLogin
+        </div>
         <div style={{ margin: "10px" }} onClick={facebookLogin}>
           facebookLogin
         </div>
