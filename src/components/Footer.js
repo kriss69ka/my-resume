@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const DivFooter = styled.div`
+const DivFooter = styled.footer`
   font-size: 12px;
   text-align: center;
   padding: 10px 0;

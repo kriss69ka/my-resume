@@ -3,9 +3,8 @@ import styled from "styled-components";
 
 import { Form, Field } from "react-final-form";
 
-const onSubmit = async values => {
-  window.alert(JSON.stringify(values, 0, 2));
-};
+//отправка формы на эмэйл
+const onSubmit = async values => {};
 
 const StyledForm = styled.form`
   display: flex;
@@ -48,14 +47,16 @@ export default function ContactForm() {
               name="firstName"
               component="input"
               type="text"
-              placeholder="Имя*"
+              placeholder="Имя"
+              required
             />
 
             <Item
               name="email"
               component="input"
               type="text"
-              placeholder="Email*"
+              placeholder="Email"
+              required
             />
 
             <Item

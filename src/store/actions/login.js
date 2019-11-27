@@ -25,7 +25,6 @@ const login = (provider, dispatch) => {
     .then(result => {
       var token = result.credential.accessToken;
       var user = result.user;
-      console.log(user.uid);
       dispatch({ type: SIGN_IN, payload: { token, user } });
     })
     .catch(error => {

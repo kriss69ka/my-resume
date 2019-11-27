@@ -5,19 +5,26 @@ import InstLogo from "../media/instagram-logo.svg";
 import VkLogo from "../media/vk-logo.svg";
 
 import ContactForm from "./ContactForm";
-const Title = styled.div`
+const Title = styled.h4`
   font-size: 50px;
   box-sizing: border-box;
-  padding: 60px 0 25px 0;
+  ${"" /* padding: 60px 0 25px 0; */}
+  margin: 20px 0;
 `;
 const TextAboutMe = styled.p`
   font-size: 15px;
 `;
 const Container = styled.div`
   display: flex;
+  @media (max-width: 640px) {
+    flex-direction: column;
+  }
 `;
 const ContainerAboutMe = styled.div`
   width: 50%;
+  @media (max-width: 640px) {
+    width: 100%;
+  }
 `;
 const ItemContact = styled.p`
   font-size: 15px;
@@ -40,8 +47,11 @@ export default function AboutMe() {
   return (
     <Container>
       <ContainerAboutMe>
-        <Title>Обо Мне</Title>
-        <TextAboutMe>Это текст</TextAboutMe>
+        <Title>Обо мне</Title>
+        <TextAboutMe>
+          Если вы хотите себе на работу оч классного фронтендера, то обязательно
+          свяжитесь со мной в ближайшее время
+        </TextAboutMe>
       </ContainerAboutMe>
       <ContainerAboutMe>
         <Title>Контакты</Title>

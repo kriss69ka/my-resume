@@ -1,6 +1,6 @@
 // https://look.com.ua/pic/201303/1280x1024/look.com.ua-65931.jpg
 
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 
@@ -10,12 +10,18 @@ const mapDispatchToProps = {
   fetchUser: fetchUserAction
 };
 
+const mapStateToProps = state => {
+  return {
+    users: state.userData
+  };
+};
+
 const Img = styled.img`
   width: 776px;
   height: 380px;
   object-fit: cover;
 `;
-const Name = styled.div`
+const Name = styled.span`
   font-size: 50px;
   color: ${props => props.colorValue || "#000000;"};
 `;
@@ -24,6 +30,9 @@ const FullName = styled.div`
   display: flex;
   justify-content: center;
   padding-bottom: 10px;
+  @media (max-width: 640px) {
+    flex-direction: column;
+  }
 `;
 const MainContainer = styled.div`
   border-bottom: 1px solid rgba(0, 0, 0, 1);
@@ -39,10 +48,11 @@ const AboutMe = styled.p`
   font-size: 14px;
 `;
 
-export default function MainComponent({ fetchUser }) {
-  React.useEffect(() => {
+export default function MainComponent({ fetchUser, users }) {
+  useEffect(() => {
     fetchUser(1);
   }, []);
+
   return (
     <>
       <MainContainer>
@@ -61,4 +71,4 @@ export default function MainComponent({ fetchUser }) {
   );
 }
 
-export const Main = connect(null, mapDispatchToProps)(MainComponent);
+export const Main = connect(mapStateToProps, mapDispatchToProps)(MainComponent);
