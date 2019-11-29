@@ -1,6 +1,4 @@
-// https://look.com.ua/pic/201303/1280x1024/look.com.ua-65931.jpg
-
-import React, { useEffect } from "react";
+import React, { Component } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 
@@ -12,16 +10,24 @@ const mapDispatchToProps = {
 
 const mapStateToProps = state => {
   return {
-    users: state.userData
+    firebaseUserInfo: state.firebaseUser,
+    userData: state.userData,
+    registred: state.registred,
+    userDataLoaded: state.userDataLoaded
   };
 };
 
 const Img = styled.img`
-  width: 776px;
-  height: 380px;
-  object-fit: cover;
+  width: 100%;
+  max-width: 50%;
+  object-fit: contain;
+
+  @media (max-width: 640px) {
+    display: none;
+  }
 `;
 const Name = styled.span`
+  text-align: center;
   font-size: 50px;
   color: ${props => props.colorValue || "#000000;"};
 `;
@@ -29,10 +35,9 @@ const Name = styled.span`
 const FullName = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
   padding-bottom: 10px;
-  @media (max-width: 640px) {
-    flex-direction: column;
-  }
+  flex-direction: column;
 `;
 const MainContainer = styled.div`
   border-bottom: 1px solid rgba(0, 0, 0, 1);
@@ -48,27 +53,42 @@ const AboutMe = styled.p`
   font-size: 14px;
 `;
 
-export default function MainComponent({ fetchUser, users }) {
-  useEffect(() => {
-    fetchUser(1);
-  }, []);
+export default class MainComponent extends Component {
+  componentDidMount() {
+    const { fetchUser, uid } = this.props;
+    fetchUser(uid);
+  }
 
-  return (
-    <>
-      <MainContainer>
-        <Img src="https://look.com.ua/pic/201303/1280x1024/look.com.ua-65931.jpg" />
-        <FullName>
-          <Name>Кристина Ким. &nbsp;</Name>
-          <Name colorValue="rgba(170,168,168,1)">Frontend Dev.</Name>
-        </FullName>
-      </MainContainer>
-      <MainContainer>
-        <AboutMe>
-          Привет! Мне 22 года. Сейчас я живу в Москве и учусь в школе Сбербанка.
-        </AboutMe>
-      </MainContainer>
-    </>
-  );
+  render() {
+    const { registred, userDataLoaded } = this.props;
+
+    return registred && userDataLoaded ? (
+      <>
+        <MainContainer>
+          <Img
+            src={
+              this.props.userData.imgUrl ||
+              "http://lluban.by/images/storage/news/000509_818136_big.jpg"
+            }
+          />
+          <FullName>
+            <Name>
+              {this.props.userData.firstName || "Имя"}{" "}
+              {this.props.userData.lastName || "Фамилия"}.
+            </Name>
+            <Name colorValue="rgba(170,168,168,1)">
+              {this.props.userData.profession || "Профессия"}
+            </Name>
+          </FullName>
+        </MainContainer>
+        <MainContainer>
+          <AboutMe>{this.props.userData.text || "Текст"}</AboutMe>
+        </MainContainer>
+      </>
+    ) : (
+      <div>loading...</div>
+    );
+  }
 }
 
 export const Main = connect(mapStateToProps, mapDispatchToProps)(MainComponent);

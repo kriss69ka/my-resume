@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Form, Field } from "react-final-form";
+import { useSelector } from "react-redux";
 
 const Title = styled.h4`
   font-size: 50px;
@@ -8,7 +8,6 @@ const Title = styled.h4`
   margin: 20px 0;
 `;
 const Block = styled.div`
-  width: 50%;
   @media (max-width: 640px) {
     width: 100%;
   }
@@ -17,7 +16,11 @@ const BlockName = styled.h3`
   font-size: 25px;
   margin: 15px 0;
 `;
-const ItemBlock = styled.div``;
+const ItemBlock = styled.div`
+  width: 80%;
+  border-bottom: 1px solid;
+  margin: 20px 0;
+`;
 const Item = styled.div`
   font-size: 15px;
   margin: 5px 0;
@@ -41,150 +44,71 @@ const Wrapper = styled.div`
     flex-direction: column;
   }
 `;
-const BlockItemInput = styled(Field)`
-  margin: 5px 0;
-  width: 100%;
-`;
-const Button = styled.button``;
-const onSubmit = async values => {};
 
 export default function Resume() {
-  return (
-    <>
+  const {
+    education,
+    work,
+    skills,
+    lastName,
+    firstName,
+    dateBirth
+  } = useSelector(state => state.userData);
+
+  const loaded = useSelector(state => state.userDataLoaded);
+  return loaded ? (
+    <div style={{ padding: "10px" }}>
       <Title>Резюме</Title>
       <BlockWrapper>
         <Block>
-          <BlockName>Кристина Ким</BlockName>
-          <Item>31 июля 1997</Item>
-          <Item>Учусь в школе Сербанка.</Item>
+          <BlockName>
+            {firstName || "Имя"} {lastName || "Фамилия"}
+          </BlockName>
+          <Item>{dateBirth || "Дата рождения"}</Item>
         </Block>
       </BlockWrapper>
       <Wrapper>
         <BlockWrapper>
           <Block>
             <BlockName>Образование</BlockName>
-            <ItemBlock>
-              <Item>Школа</Item>
-              <Item>2013-2017</Item>
-              <Item>Школьник</Item>
-              <Button>Удалить</Button>
-            </ItemBlock>
-            <ItemBlock>
-              <Item>АКВТ</Item>
-              <Item>2013-2017</Item>
-              <Item>Программист</Item>
-              <Button>Удалить</Button>
-            </ItemBlock>
-            <Form
-              onSubmit={onSubmit}
-              render={({
-                handleSubmit,
-                form,
-                submitting,
-                pristine,
-                values
-              }) => (
-                <form>
-                  <BlockItemInput
-                    name="name"
-                    component="input"
-                    type="text"
-                    placeholder="Название учереждения"
-                    required
-                  />
-                  <BlockItemInput
-                    name="date"
-                    component="input"
-                    type="text"
-                    placeholder="Дата обучения"
-                    required
-                  />
-                  <BlockItemInput
-                    name="speciality"
-                    component="input"
-                    type="text"
-                    placeholder="Специальность"
-                    required
-                  />
-                  <Button>Добавить</Button>
-                </form>
-              )}
-            />
+            {education.length
+              ? education.map(education => (
+                  <ItemBlock>
+                    <Item>{education.name}</Item>
+                    <Item>
+                      {education.dateFrom}-{education.dateTo}
+                    </Item>
+                    <Item>{education.position}</Item>
+                  </ItemBlock>
+                ))
+              : "Список где учился"}
           </Block>
           <Block>
             <BlockName>Опыт работы</BlockName>
-            <ItemBlock>
-              <Item>Ай Ди Софт</Item>
-              <Item>Август 2016-Май 2017</Item>
-              <Item>Инженер - программист</Item>
-            </ItemBlock>
-            <Form
-              onSubmit={onSubmit}
-              render={({
-                handleSubmit,
-                form,
-                submitting,
-                pristine,
-                values
-              }) => (
-                <form>
-                  <BlockItemInput
-                    name="name"
-                    component="input"
-                    type="text"
-                    placeholder="Место работы"
-                    required
-                  />
-                  <BlockItemInput
-                    name="date"
-                    component="input"
-                    type="text"
-                    placeholder="Дата"
-                    required
-                  />
-                  <BlockItemInput
-                    name="position"
-                    component="input"
-                    type="text"
-                    placeholder="Должность"
-                    required
-                  />
-                  <Button>Добавить</Button>
-                </form>
-              )}
-            />
+            {work.length
+              ? work.map(work => (
+                  <ItemBlock>
+                    <Item>{work.name}</Item>
+                    <Item>
+                      {work.dateFrom}-{work.dateTo}
+                    </Item>
+                    <Item>{work.position}</Item>
+                  </ItemBlock>
+                ))
+              : "Список где работал"}
           </Block>
         </BlockWrapper>
         <BlockWrapper>
           <Block>
             <BlockName>Навыки</BlockName>
-            <Item>HTML</Item>
-            <Item>CSS</Item>
-            <Item>SQL</Item>
-            <Form
-              onSubmit={onSubmit}
-              render={({
-                handleSubmit,
-                form,
-                submitting,
-                pristine,
-                values
-              }) => (
-                <form>
-                  <BlockItemInput
-                    name="skills"
-                    component="input"
-                    type="text"
-                    placeholder="Навыки"
-                    required
-                  />
-                  <Button>Добавить</Button>
-                </form>
-              )}
-            />
+            {skills.length
+              ? skills.map(skill => <Item>{skill}</Item>)
+              : "Список что умеешь"}
           </Block>
         </BlockWrapper>
       </Wrapper>
-    </>
+    </div>
+  ) : (
+    <div>loading</div>
   );
 }

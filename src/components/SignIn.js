@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { googleLogin, appleLogin, facebookLogin } from "../store/actions/login";
+import { googleLogin } from "../store/actions/login";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
@@ -16,12 +16,22 @@ const SignInBtn = styled.a`
   font-size: 16px;
   cursor: pointer;
   margin-bottom: 10px;
+  transition: 0.3s;
+
   &:focus {
     color: #000000;
   }
   &:hover {
     color: #000000;
   }
+`;
+
+const Wraper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
 `;
 class SignInComponent extends Component {
   loginWithGoogle = () => {
@@ -30,12 +40,9 @@ class SignInComponent extends Component {
 
   render() {
     return (
-      <>
+      <Wraper>
         <SignInBtn onClick={this.loginWithGoogle}>google Login</SignInBtn>
-        <SignInBtn onClick={appleLogin}>apple Login</SignInBtn>
-        <SignInBtn onClick={facebookLogin}>facebook Login</SignInBtn>
-        <SignInBtn>Выход</SignInBtn>
-      </>
+      </Wraper>
     );
   }
 }

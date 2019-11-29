@@ -1,6 +1,9 @@
-// import "firebase/auth";
 import * as firebase from "firebase";
+
+import axios from "axios";
+
 export const SIGN_IN = "SIGN_IN";
+export const REG_USER = "REG_USER";
 
 const config = {
   apiKey: "AIzaSyC3tAS5cYcN0_V-n1v9rSOIoKOLqt_Ypeg",
@@ -15,27 +18,32 @@ const config = {
 firebase.initializeApp(config);
 
 const google = new firebase.auth.GoogleAuthProvider();
-const apple = new firebase.auth.OAuthProvider("apple.com");
-const facebook = new firebase.auth.FacebookAuthProvider();
 
 const login = (provider, dispatch) => {
   firebase
     .auth()
     .signInWithPopup(provider)
     .then(result => {
-      var token = result.credential.accessToken;
-      var user = result.user;
-      dispatch({ type: SIGN_IN, payload: { token, user } });
+      const user = result.user;
+      dispatch({ type: SIGN_IN, payload: { user } });
+      return { email: user.email, fio: user.displayName, uid: user.uid };
+    })
+    .then(userData => {
+      axios({
+        method: "post",
+        url: "/regUser",
+        data: {
+          userInfo: userData
+        }
+      }).then(dispatch({ type: REG_USER }));
     })
     .catch(error => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      var email = error.email;
-      var credential = error.credential;
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      const email = error.email;
+      const credential = error.credential;
+      console.error(errorCode, errorMessage, email, credential);
     });
 };
 
-// export const googleLogin = () => login(google);
-export const appleLogin = () => login(apple);
-export const facebookLogin = () => login(facebook);
 export const googleLogin = () => dispatch => login(google, dispatch);

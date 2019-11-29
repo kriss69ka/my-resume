@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
+
 import GithubLogo from "../media/github-logo.svg";
 import InstLogo from "../media/instagram-logo.svg";
 import VkLogo from "../media/vk-logo.svg";
 
-import ContactForm from "./ContactForm";
 const Title = styled.h4`
   font-size: 50px;
   box-sizing: border-box;
@@ -16,6 +17,7 @@ const TextAboutMe = styled.p`
 `;
 const Container = styled.div`
   display: flex;
+  padding: 10px;
   @media (max-width: 640px) {
     flex-direction: column;
   }
@@ -44,36 +46,48 @@ const SocialImg = styled.img`
 `;
 
 export default function AboutMe() {
-  return (
+  const {
+    address,
+    aboutMeText,
+    phone,
+    email,
+    linkIg,
+    linkGithub,
+    linkVk
+  } = useSelector(state => state.userData);
+
+  const loaded = useSelector(state => state.userDataLoaded);
+  return loaded ? (
     <Container>
       <ContainerAboutMe>
         <Title>Обо мне</Title>
-        <TextAboutMe>
-          Если вы хотите себе на работу оч классного фронтендера, то обязательно
-          свяжитесь со мной в ближайшее время
-        </TextAboutMe>
+        <TextAboutMe>{aboutMeText || "Текст"}</TextAboutMe>
       </ContainerAboutMe>
       <ContainerAboutMe>
         <Title>Контакты</Title>
-        <ItemContact>Астрахань, Ул. Керченская, 28</ItemContact>
-        <ItemContact>414015, Россия</ItemContact>
-        {/* изменить на email */}
-        <ItemContact>kriss.69ka@gmail.com</ItemContact>
-        {/* изменить на телефон */}
-        <ItemContact>Телефон: 79996460177</ItemContact>
+        <ItemContact>{address || "Адрес"}</ItemContact>
+        <ItemContact>{email || "Email"}</ItemContact>
+        <ItemContact>{phone || "Телефон"}</ItemContact>
         <Social>
-          <SocialLink href="https://github.com/kriss69ka">
-            <SocialImg src={GithubLogo} />
-          </SocialLink>
-          <SocialLink href="https://www.instagram.com/kriss_69ka/">
-            <SocialImg src={InstLogo} />
-          </SocialLink>
-          <SocialLink href="https://vk.com/id39631161">
-            <SocialImg src={VkLogo} />
-          </SocialLink>
+          {linkIg && (
+            <SocialLink href={linkIg}>
+              <SocialImg src={GithubLogo} />
+            </SocialLink>
+          )}
+          {linkGithub && (
+            <SocialLink href={linkGithub}>
+              <SocialImg src={InstLogo} />
+            </SocialLink>
+          )}
+          {linkVk && (
+            <SocialLink href={linkVk}>
+              <SocialImg src={VkLogo} />
+            </SocialLink>
+          )}
         </Social>
-        <ContactForm />
       </ContainerAboutMe>
     </Container>
+  ) : (
+    <div>loading</div>
   );
 }

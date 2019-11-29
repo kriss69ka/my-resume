@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { SignIn } from "./SignIn";
 
 const MenuItem = styled(Link)`
   color: #aaa8a8;
@@ -36,14 +35,12 @@ const Navigation = styled.nav`
   }
 `;
 
-export default function Header() {
-  // const login = useSelector(state => state.user);
+export default function Header({ uid }) {
   return (
     <Navigation>
-      <MenuItem to="/">Главная</MenuItem>
-      <MenuItem to="/about">Обо мне</MenuItem>
-      <MenuItem to="/resume">Резюме</MenuItem>
-      {/* <SignIn /> */}
+      <MenuItem to={`/main/${uid}`}>Главная</MenuItem>
+      <MenuItem to={`/about/${uid}`}>Обо мне</MenuItem>
+      <MenuItem to={`/resume/${uid}`}>Резюме</MenuItem>
     </Navigation>
   );
 }
