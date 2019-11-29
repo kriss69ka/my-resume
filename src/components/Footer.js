@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Wrapper = styled.div`
   margin: 10px;
@@ -23,11 +24,12 @@ const Btn = styled(Link)`
 export default function Footer({ uid }) {
   const history = useHistory();
   const editPage = history.location.pathname.split("/")[1] === "edit";
-  return (
-    !editPage && (
-      <Wrapper>
-        <Btn to={`/edit/${uid}`}>Редактировать</Btn>
-      </Wrapper>
-    )
+  const fireBaseUser = useSelector(state => state.firebaseUser);
+  return !editPage && fireBaseUser ? (
+    <Wrapper>
+      <Btn to={`/edit/${uid}`}>Редактировать</Btn>
+    </Wrapper>
+  ) : (
+    <div></div>
   );
 }
