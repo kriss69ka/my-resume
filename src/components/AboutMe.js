@@ -71,12 +71,12 @@ export default function AboutMe() {
         <Social>
           {linkIg && (
             <SocialLink href={linkIg}>
-              <SocialImg src={GithubLogo} />
+              <SocialImg src={InstLogo} />
             </SocialLink>
           )}
           {linkGithub && (
             <SocialLink href={linkGithub}>
-              <SocialImg src={InstLogo} />
+              <SocialImg src={GithubLogo} />
             </SocialLink>
           )}
           {linkVk && (
