@@ -5,7 +5,7 @@
   },
   "proxies": {
     "/api/": {
-      "origin": "https://mysterious-woodland-33105.herokuapp.com/"
+      "origin": "https://mysterious-woodland-33105.herokuapp.com/api/"
     }
   }
 }
