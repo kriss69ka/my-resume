@@ -31,7 +31,7 @@ const login = (provider, dispatch) => {
     .then(userData => {
       axios({
         method: "post",
-        url: "/regUser",
+        url: "/api/regUser",
         data: {
           userInfo: userData
         }

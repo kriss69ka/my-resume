@@ -96,7 +96,7 @@ export default function EditPage() {
 
     axios({
       method: "post",
-      url: "/edit",
+      url: "/api/edit",
       data: {
         userInfo: user
       }
