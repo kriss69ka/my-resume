@@ -9,7 +9,6 @@ import VkLogo from "../media/vk-logo.svg";
 const Title = styled.h4`
   font-size: 50px;
   box-sizing: border-box;
-  ${"" /* padding: 60px 0 25px 0; */}
   margin: 20px 0;
 `;
 const TextAboutMe = styled.p`
